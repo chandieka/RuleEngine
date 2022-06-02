@@ -1,12 +1,13 @@
 <?php 
 require __DIR__."/vendor/autoload.php";
 
+$config = json_decode(file_get_contents(__DIR__ . "/config.json"));
+
 const API_URL = "https://mb-api.abuse.ch/api/v1/";
 const AUTHOR = "Chandieka";
 const FILENAME = "malware.yaml";
 const DIRECTORY = "rules";
 
-$config = json_decode(file_get_contents(__DIR__ . "/config.json"));
 
 $ruleArray = [
     "title" => "",
@@ -34,12 +35,11 @@ if (!file_exists(DIRECTORY) && !is_dir(DIRECTORY)) {
     mkdir(DIRECTORY);
 } 
 
-echo "--------------------------------------------------------------\n";
 foreach ($config->signatures as $key => $signature) {
     $option = [
         "query" => "get_siginfo",
         "signature" => $signature,
-        "selector" => "100"
+        "selector" => $config->limit
     ];
 
     $ruleArray['title'] = $signature . " Malware family is detected!";
