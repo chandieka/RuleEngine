@@ -16,5 +16,23 @@
         "Loki",
         "CoinMiner"
     ],
+    "filetypes": [
+        "exe",
+        "msi",
+        "pdf",
+        "docx",
+        "doc",
+        "docm",
+        "ppt",
+        "pps",
+        "ppa",
+        "ppam",
+        "xls",
+        "xlsx",
+        "zip",
+        "rar",
+        "tar",
+        "gzip"
+    ],
     "limit": 1000
 }

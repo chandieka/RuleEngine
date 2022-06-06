@@ -1,49 +1,49 @@
 <?php 
 require __DIR__."/vendor/autoload.php";
 
+use Ramsey\Uuid\Uuid;
+
 $config = json_decode(file_get_contents(__DIR__ . "/config.json"));
 
 const API_URL = "https://mb-api.abuse.ch/api/v1/";
 const AUTHOR = "Chandieka";
 const FILENAME = "malware.yaml";
-const DIRECTORY = "rules";
+$directory = "rules-signature-".date("d-m-Y");
 
-
-$ruleArray = [
-    "title" => "",
-    // "id" => uniqid(),
-    "description" => "TEST",
-    "reference" => [
-        "All hash found in the rules is source from https://bazaar.abuse.ch/"
-    ],
-    "author" => AUTHOR,
-    "logsource" => [
-        "product" => "zeek",
-        "service" => "files"
-    ],
-    "detection" => [
-        "selection" => [
-            // "hash.md5" => [],
-            "hash.sha256" => [],
-        ],
-        "condition" => "selection",
-    ],
-    "level" => "high"
-];
-
-if (!file_exists(DIRECTORY) && !is_dir(DIRECTORY)) {
-    mkdir(DIRECTORY);
+if (!file_exists($directory) && !is_dir($directory)) {
+    mkdir($directory);
 } 
 
 foreach ($config->signatures as $key => $signature) {
+    $ruleArray = [
+        "title" => $signature . " Malware family is detected!",
+        "id" => Uuid::uuid4()->toString(),
+        "description" => "Up to $config->limit malware hashes from $signature family",
+        "reference" => [
+            "All hash found in the rules can be found in https://bazaar.abuse.ch/",
+        ],
+        "author" => AUTHOR,
+        "date" => date("d/m/Y"),
+        "logsource" => [
+            "product" => "zeek",
+            "service" => "files"
+        ],
+        "detection" => [
+            "selection" => [
+                // "hash.md5" => [],
+                "hash.sha256" => [],
+            ],
+            "condition" => "selection",
+        ],
+        "level" => "high"
+    ];
+
     $option = [
         "query" => "get_siginfo",
         "signature" => $signature,
         "selector" => $config->limit
     ];
-
-    $ruleArray['title'] = $signature . " Malware family is detected!";
-
+    
     echo "fetching latest malware hashes for $signature malware family!\n";
     $client = curl_init();
     curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
@@ -53,7 +53,7 @@ foreach ($config->signatures as $key => $signature) {
     $result = curl_exec($client);
     curl_close($client);
     $response = json_decode($result);
-
+    
     echo "Converting the hashes into a SIGMA rule!\n";
     for ($i = 0; $i < count($response->data); $i++) {
         $hash = $response->data[$i];
@@ -63,7 +63,7 @@ foreach ($config->signatures as $key => $signature) {
     
     echo "Outputing the rule to a ". $signature. ".yaml" . "\n";
     
-    file_put_contents(__DIR__ . "/" .  DIRECTORY . "/". $signature . ".yaml", $ruleEncoded);
+    file_put_contents(__DIR__ . "/" .  $directory . "/". $signature . ".yaml", $ruleEncoded);
     
     echo "waiting 5 seconds..\n";
     sleep(5);
