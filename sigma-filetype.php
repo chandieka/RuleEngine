@@ -23,6 +23,7 @@ foreach ($config->filetypes as $filetype) {
 
     $ruleArray = [
         "title" => "Malware with $filetype file type is detected!",
+        "id" => Uuid::uuid4()->toString(),
         "description" => "Up to 1000 Malware hash with $filetype file type",
         "reference" => [
             "All hash found in the rules can be found in https://bazaar.abuse.ch/"
