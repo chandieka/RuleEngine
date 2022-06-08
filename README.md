@@ -7,9 +7,9 @@ A PHP script wrapper for MalwareBazaar API to convert the malware hashes into a 
 Run this command
 `$ composer install`
 # How to used?
-Executing the command bellow will generate Sigma rule which are based malware filetypes
+<p>Executing the command bellow will generate Sigma rule which are based malware filetypes</p>
 `$ php sigma-filetype.php`
-Executing the command bellow will generate Sigma rule which are based malware family
+<p>Executing the command bellow will generate Sigma rule which are based malware family</p>
 `$ php sigma-signature.php`
-Executing the command bellow will generate Sigma rule which are based the latest addition of malware to the MalwareBazaar
+<p>Executing the command bellow will generate Sigma rule which are based the latest addition of malware to the MalwareBazaar</p>
 `$ php sigma-recent-set.php`
