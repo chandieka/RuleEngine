@@ -22,3 +22,8 @@ Executing the command bellow will generate Sigma rule which are based malware fa
 Executing the command bellow will generate Sigma rule which are based the latest addition of malware to the MalwareBazaar.
 
 `$ php sigma-recent-set.php`
+
+# How does the script work?
+
+All the script available in this project use curl to request a sets of information from a public API, there are 2 API that are used, which are MalwareBazaar and InQuestLabs.
+Depending on the type of API call that was made the hashes from a given malware will be grouped into a certain descriptive namely either by filetype and signature (MalwareFamily).  

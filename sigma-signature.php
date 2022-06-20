@@ -16,11 +16,11 @@ if (!file_exists($directory) && !is_dir($directory)) {
 
 foreach ($config->signatures as $key => $signature) {
     $ruleArray = [
-        "title" => $signature . " Malware family is detected!",
+        "title" => "Malware with $filetype file type is detected!",
         "id" => Uuid::uuid4()->toString(),
-        "description" => "Up to $config->limit malware hashes from $signature family",
+        "description" => "Up to $config->limit malware hashes",
         "reference" => [
-            "All hash found in the rules can be found in https://bazaar.abuse.ch/",
+            "All hash found in the rules can be found in https://labs.inquest.net/",
         ],
         "author" => AUTHOR,
         "date" => date("d/m/Y"),

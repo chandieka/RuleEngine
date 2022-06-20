@@ -1,0 +1,14 @@
+title: TEST_HASH_RULE_2
+description: TEST
+reference:
+- TEST
+author: Chandieka
+logsource:
+  product: zeek
+  service: files
+detection:
+  selection:
+    hash.sha256:
+    - e759743ea7967ccccee0d27b9bfcbaa1
+  condition: selection
+level: high

@@ -7,7 +7,6 @@ $config = json_decode(file_get_contents(__DIR__ . "/config.json"));
 const AUTHOR = "Chandieka";
 const API_URL = "https://mb-api.abuse.ch/api/v1/";
 
-
 $directory = "rules-filetype-" . date("d-m-Y");
 
 if (!file_exists($directory) && !is_dir($directory)) {
