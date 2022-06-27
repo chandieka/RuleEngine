@@ -74,8 +74,8 @@ foreach ($families as $signature => $hashes) {
         ],
         "detection" => [
             "selection" => [
-                // "hash.md5" => [],
-                "hash.sha256" => [],
+                "hash.md5" => [],
+                // "hash.sha256" => [],
             ],
             "condition" => "selection",
         ],
@@ -83,7 +83,8 @@ foreach ($families as $signature => $hashes) {
     ];
 
     foreach ($hashes as $hash) {
-        $ruleArray["detection"]["selection"]["hash.sha256"][] = $hash->sha256_hash;
+        $ruleArray["detection"]['selection']["hash.md5"][] = $hash->md5_hash;
+        // $ruleArray["detection"]["selection"]["hash.sha256"][] = $hash->sha256_hash;
     }
 
     $ruleEncoded = yaml_emit($ruleArray);

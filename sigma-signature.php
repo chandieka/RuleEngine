@@ -16,7 +16,7 @@ if (!file_exists($directory) && !is_dir($directory)) {
 
 foreach ($config->signatures as $key => $signature) {
     $ruleArray = [
-        "title" => "Malware with $filetype file type is detected!",
+        "title" => $signature . " Malware family is detected!",
         "id" => Uuid::uuid4()->toString(),
         "description" => "Up to $config->limit malware hashes",
         "reference" => [
@@ -30,8 +30,8 @@ foreach ($config->signatures as $key => $signature) {
         ],
         "detection" => [
             "selection" => [
-                // "hash.md5" => [],
-                "hash.sha256" => [],
+                "hash.md5" => [],
+                // "hash.sha256" => [],
             ],
             "condition" => "selection",
         ],
@@ -57,7 +57,8 @@ foreach ($config->signatures as $key => $signature) {
     echo "Converting the hashes into a SIGMA rule!\n";
     for ($i = 0; $i < count($response->data); $i++) {
         $hash = $response->data[$i];
-        $ruleArray["detection"]['selection']["hash.sha256"][] = $hash->sha256_hash;
+        $ruleArray["detection"]['selection']["hash.md5"][] = $hash->md5_hash;
+        // $ruleArray["detection"]['selection']["hash.sha256"][] = $hash->sha256_hash;
     }
     $ruleEncoded = yaml_emit($ruleArray);
     
@@ -65,8 +66,8 @@ foreach ($config->signatures as $key => $signature) {
     
     file_put_contents(__DIR__ . "/" .  $directory . "/". $signature . ".yaml", $ruleEncoded);
     
-    echo "waiting 5 seconds..\n";
-    sleep(5);
+    echo "waiting 2 seconds..\n";
+    sleep(2);
     echo "--------------------------------------------------------------\n";
 }
 

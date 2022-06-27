@@ -35,8 +35,8 @@ foreach ($config->filetypes as $filetype) {
         ],
         "detection" => [
             "selection" => [
-                // "hash.md5" => [],
-                "hash.sha256" => [],
+                "hash.md5" => [],
+                // "hash.sha256" => [],
             ],
             "condition" => "selection",
         ],
@@ -60,7 +60,8 @@ foreach ($config->filetypes as $filetype) {
     // echo "Converting the hashes into a SIGMA rule!\n";
     for ($i = 0; $i < count($response->data); $i++) {
         $hash = $response->data[$i];
-        $ruleArray["detection"]['selection']["hash.sha256"][] = $hash->sha256_hash;
+        $ruleArray["detection"]['selection']["hash.md5"][] = $hash->md5_hash;
+        // $ruleArray["detection"]['selection']["hash.sha256"][] = $hash->sha256_hash;
     }
 
     $ruleEncoded = yaml_emit($ruleArray);

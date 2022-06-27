@@ -53,6 +53,7 @@ foreach ($filetypes as $filetype) {
         ],
         "detection" => [
             "selection" => [
+                // "hash.md5" => [],
                 "hash.sha256" => [],
             ],
             "condition" => "selection",
